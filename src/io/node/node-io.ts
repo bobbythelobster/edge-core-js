@@ -24,7 +24,7 @@ export function makeNodeIo(path: string): EdgeIo {
     // Networking:
     fetch(uri: string, opts?: EdgeFetchOptions) {
       if (opts?.privacy === 'nym') {
-        throw new Error('NYM mixFetch is not supported in Node.js')
+        throw new Error('NYM is disabled')
       }
       return fetch(uri, opts)
     },

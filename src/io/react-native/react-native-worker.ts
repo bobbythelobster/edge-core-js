@@ -17,7 +17,6 @@ import {
   EdgeFetchResponse,
   EdgeIo
 } from '../../types/types'
-import { initMixFetch, queueMixFetch } from '../../util/nym'
 import { hideProperties } from '../hidden-properties'
 import { makeNativeBridge } from './native-bridge'
 import { WorkerApi, YAOB_THROTTLE_MS } from './react-native-types'
@@ -176,14 +175,7 @@ async function makeIo(logBackend: LogBackend): Promise<EdgeIo> {
       const { corsBypass = 'auto', privacy = 'none' } = opts ?? {}
 
       if (privacy === 'nym') {
-        // Ensure mixFetch is initialized before use
-        await initMixFetch(log)
-        // Use queued fetch to handle mixFetch's one-request-per-host limitation
-        const response = await queueMixFetch(uri, {
-          ...opts,
-          mode: 'unsafe-ignore-cors' as RequestMode
-        })
-        return response
+        throw new Error('NYM is disabled')
       }
       if (corsBypass === 'always') {
         return await nativeFetch(uri, opts)
